@@ -1,0 +1,50 @@
+docker exec -i postgresSQLS psql -U admin -d source_db < create_tables.sql
+pip install --user pandas sqlalchemy psycopg2-binary
+python eventgenerator.py
+
+
+
+
+{
+  "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+  "plugin.name": "pgoutput",
+  "database.hostname": "postgresSQLS",
+  "database.port": "5432",
+  "database.user": "admin",
+  "database.password": "adminSS",
+  "database.dbname": "source_db",
+  "database.server.name": "dbserver1",
+  "table.include.list": "public.orders,public.order_items",
+  "topic.prefix": "demo"
+}
+
+
+
+Kafka-UI : http://localhost:8090
+Flink Dashboard : http://localhost:8081
+Debezium API : http://localhost:8083
+
+
+calculer le Chiffre d'Affaires (CA) en temps réel par catégorie de produit.
+
+
+
+
+
+
+
+installer python dans flink : # 1. Entrer dans le conteneur en mode root
+docker exec -it --user root jobmanager bash
+
+# 2. Mettre à jour et installer Python
+apt-get update
+apt-get install -y python3 python3-pip python3-dev
+
+# 3. Créer un lien symbolique pour que Flink trouve "python"
+ln -s /usr/bin/python3 /usr/bin/python
+
+# 4. Installer PyFlink (indispensable pour exécuter ton script)
+pip3 install apache-flink==1.17.0
+
+# 5. Sortir du conteneur
+exit
