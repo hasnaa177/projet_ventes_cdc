@@ -1,0 +1,14 @@
+{
+  "name": "postgres-source",
+  "config": {
+    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+    "database.hostname": "postgres",
+    "database.port": "5432",
+    "database.user": "admin",
+    "database.password": "adminSS",
+    "database.dbname": "source_db",
+    "database.server.name": "demo",
+    "table.include.list": "public.order_items,public.orders",
+    "plugin.name": "pgoutput"
+  }
+}
